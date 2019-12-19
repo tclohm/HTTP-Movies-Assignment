@@ -16,6 +16,8 @@ const UpdateMovie = (props) => {
 	}
 
 	const handleStarChange = (event) => {
+		// need to map through the array to find if the index and event.target.name are equal
+		// if so, return `event.target.name` to effect
 		const actor = movie.stars.map((star, index) => {
 			if( index === Number(event.target.name) ) {
 				return event.target.value
@@ -24,6 +26,23 @@ const UpdateMovie = (props) => {
 			}
 		});
 		setMovie({...movie, stars: actor})
+	}
+
+	const handleStarAdd = (event) => {
+		event.preventDefault();
+		console.log("add");
+		const actors = movie.stars.map(star => { return star })
+		setMovie({...movie, stars: [...actors, ""]})
+	}
+
+	const handleStarRemove = (event) => {
+		console.log("remove");
+		const actors = movie.stars.filter( (person, index) => {
+			if (Number(event.target.name) !== index) { return person } else {
+				return
+			}
+		})
+		setMovie({...movie, stars: [...actors]})
 	}
 
 	const handleSubmit = (event) => {
@@ -62,6 +81,7 @@ const UpdateMovie = (props) => {
 				onChange={handleChange}
 			/>
 			{movie.stars === undefined ? <p>nothing here</p> : movie.stars.map( (pers, index) => (
+				<div>
 				<input
 					key={index}
 					type="text"
@@ -70,7 +90,10 @@ const UpdateMovie = (props) => {
 					value={movie.stars[index]}
 					onChange={handleStarChange}
 				/>
+				<button name={index} onClick={handleStarRemove}>remove</button>
+				</div>
 			))}
+			<button onClick={handleStarAdd}>add actor</button>
 			<button onClick={handleSubmit}>Update</button>
 		</div>
 	)
