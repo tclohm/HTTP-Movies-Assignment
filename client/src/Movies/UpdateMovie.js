@@ -4,7 +4,6 @@ import axios from "axios";
 
 const UpdateMovie = (props) => {
 	const [movie, setMovie] = useState({id: "", title: "", director: "", metascore: 0, stars: []})
-	const [stars, setStars] = useState([])
 
 	useEffect(() => {
 		let movieToEdit = props.movies.find(film => `${film.id}` === props.match.params.id);
@@ -17,8 +16,14 @@ const UpdateMovie = (props) => {
 	}
 
 	const handleStarChange = (event) => {
-		const oldPeople = stars.filter(person => person !== event.target.value)
-		setStars([...stars])
+		const actor = movie.stars.map((star, index) => {
+			if( index === Number(event.target.name) ) {
+				return event.target.value
+			} else {
+				return star
+			}
+		});
+		setMovie({...movie, stars: actor})
 	}
 
 	const handleSubmit = (event) => {
@@ -56,12 +61,13 @@ const UpdateMovie = (props) => {
 				value={movie.metascore}
 				onChange={handleChange}
 			/>
-			{movie.stars === undefined ? <p>nothing here</p> : movie.stars.map(person => (
+			{movie.stars === undefined ? <p>nothing here</p> : movie.stars.map( (pers, index) => (
 				<input
+					key={index}
 					type="text"
-					name="stars"
+					name={index}
 					placeholder="stars of the film"
-					value={person}
+					value={movie.stars[index]}
 					onChange={handleStarChange}
 				/>
 			))}
