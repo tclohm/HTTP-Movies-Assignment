@@ -15,9 +15,14 @@ body {
   position: relative;
   margin: 1rem auto;
   background-image: url("/popcorn.png");
-  background-repeat: no-repeat;
-  background-position: right;
-  color: black;
+  background-repeat: repeat;
+  background-position: left;
+  background-size: contain;
+  color: #846403;
+}
+
+.dets {
+  text-decoration: none;
 }
 
 .movie-director {

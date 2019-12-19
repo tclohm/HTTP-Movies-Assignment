@@ -8,7 +8,7 @@ export default class SavedList extends Component {
   render() {
     return (
       <div className="saved-list">
-        <h3>Saved Movies:</h3>
+        <h3><i className="fas fa-save fa-3x"></i> <i className="fas fa-film fa-3x"></i>'s:</h3>
         {this.props.list.map(movie => {
           return (
             <NavLink
